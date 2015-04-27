@@ -27,6 +27,7 @@ public class TitleScreen
     public void settingsClicked()
     {
         this.presentScreen(SettingsScreen.class, (Object) this);
+        this.finish();
     }
     /**
      * Access to the play screen
@@ -34,6 +35,7 @@ public class TitleScreen
     public void startClicked()
     {
         this.presentScreen(PlayScreen.class);
+        this.finish();
     }
     /**
      * Access to the play screen
@@ -41,5 +43,6 @@ public class TitleScreen
     public void savedClicked()
     {
         this.presentScreen(SavedScreen.class);
+        this.finish();
     }
 }

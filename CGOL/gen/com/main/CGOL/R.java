@@ -25,31 +25,32 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int Dead=0x7f080005;
-        public static final int action_settings=0x7f080018;
-        public static final int checkBox1=0x7f08000f;
-        public static final int gridHeight=0x7f08000b;
-        public static final int gridHeightLabel=0x7f08000a;
-        public static final int gridWidth=0x7f080009;
-        public static final int gridWidthLabel=0x7f080008;
-        public static final int hideButtons=0x7f080007;
-        public static final int imageView1=0x7f080014;
-        public static final int imageView2=0x7f080016;
-        public static final int imageView3=0x7f080017;
-        public static final int liveColor=0x7f080006;
-        public static final int playPause=0x7f080001;
-        public static final int returnToPrevious=0x7f08000d;
-        public static final int saved=0x7f080013;
-        public static final int settings=0x7f080012;
+        public static final int Dead=0x7f080006;
+        public static final int action_settings=0x7f080019;
+        public static final int checkBox1=0x7f080010;
+        public static final int gridHeight=0x7f08000c;
+        public static final int gridHeightLabel=0x7f08000b;
+        public static final int gridWidth=0x7f08000a;
+        public static final int gridWidthLabel=0x7f080009;
+        public static final int hideButtons=0x7f080008;
+        public static final int imageView2=0x7f080017;
+        public static final int imageView3=0x7f080018;
+        public static final int liveColor=0x7f080007;
+        public static final int logo=0x7f080015;
+        public static final int pause=0x7f080004;
+        public static final int play=0x7f080001;
+        public static final int returnToPrevious=0x7f08000e;
+        public static final int saved=0x7f080014;
+        public static final int settings=0x7f080013;
         public static final int settingsPlay=0x7f080002;
-        public static final int settingsTitle=0x7f080004;
+        public static final int settingsTitle=0x7f080005;
         public static final int shapeView=0x7f080000;
-        public static final int speed=0x7f08000e;
-        public static final int speedLabel=0x7f08000c;
-        public static final int start=0x7f080015;
+        public static final int speed=0x7f08000f;
+        public static final int speedLabel=0x7f08000d;
+        public static final int start=0x7f080016;
         public static final int step=0x7f080003;
-        public static final int textView1=0x7f080010;
-        public static final int title=0x7f080011;
+        public static final int textView1=0x7f080011;
+        public static final int title=0x7f080012;
     }
     public static final class layout {
         public static final int playscreen=0x7f030000;

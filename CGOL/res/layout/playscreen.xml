@@ -8,24 +8,24 @@
         android:id="@+id/shapeView"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/playPause"
+        android:layout_above="@+id/play"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
     <Button
-        android:id="@+id/playPause"
+        android:id="@+id/play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/shapeView"
         android:layout_alignParentBottom="true"
-        android:text="Play/Pause" />
+        android:text="Play" />
 
     <Button
         android:id="@+id/settingsPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/playPause"
+        android:layout_toRightOf="@+id/play"
         android:text="Settings" />
 
     <Button
@@ -35,5 +35,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Step" />
+
+    <Button
+        android:id="@+id/pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/step"
+        android:text="Pause" />
 
 </RelativeLayout>

@@ -170,12 +170,10 @@ public class GridOfCells
         {
             if(this.getNeighbors(i, j) < 2 || this.getNeighbors(i, j) > 3)
             {
-                System.out.println("coords: "+i+" "+j+" alive 2-3 neighbors "+getNeighbors(i, j));
                 return false;
             }
             else
             {
-                System.out.println("coords: "+i+" "+j+" alive 0-1or4- neighbors "+getNeighbors(i, j));
                 return true;
             }
         }
@@ -183,12 +181,10 @@ public class GridOfCells
         {
             if(this.getNeighbors(i, j) == 3)
             {
-                System.out.println("coords: "+i+" "+j+" dead 3 neighbors "+getNeighbors(i, j));
                 return true;
             }
             else
             {
-                System.out.println("coords: "+i+" "+j+" dead not 3 neighbors "+getNeighbors(i, j));
                 return false;
             }
         }

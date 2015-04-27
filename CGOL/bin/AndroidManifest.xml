@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="18"
         android:targetSdkVersion="18" />
+    <instrumentation android:targetPackage="com.main.CGOL" android:name="android.test.InstrumentationTestRunner">
+    </instrumentation>
 
     <application
         android:allowBackup="true"
@@ -24,6 +26,7 @@
         </activity>
         <activity android:screenOrientation="portrait" android:name="PlayScreen" android:label="playscreen" android:theme="@style/AppTheme" android:launchMode="standard" android:icon="@android:drawable/alert_light_frame"></activity>
         <activity android:name="SettingsScreen"></activity>
+        <uses-library android:name="android.test.runner"/>
     </application>
 
 </manifest>
