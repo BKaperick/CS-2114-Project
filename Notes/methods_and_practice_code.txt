@@ -1,0 +1,52 @@
+
+
+public void Save(String filename, String data)
+{
+	FileOutputStream outputStream;
+
+	try 
+	{
+		outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+		outputStream.write(data.getBytes());
+		outputStream.close();
+	}	
+	catch(Exception e)	
+	{
+		e.printStackTrace();
+	}
+}
+
+public void Delete(File file)
+{
+	file.delete();
+}
+
+
+Bundle extras = getIntent().getExtras();
+if (extras != null)
+{
+	String value = extras.getString("settings");
+}
+
+public void retrieveAndApplySettings(String unparsed)
+{
+	int lastIndex = 0;
+	for (int i = 0; i < unparsed.length(); i++)
+	{
+		char c = unparsed.charAt(i);
+		if (c == '$')
+		{
+			unparsed.substring(
+}
+
+
+
+
+git stash save
+git checkout -b newbranchname
+git checkout master
+git fetch ps
+git checkout ps/master
+git push cs master
+git stash pop
+git checkout newbranchname filepath/file ##This overwrites master copy with new branch's (working) copy

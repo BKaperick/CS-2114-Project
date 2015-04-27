@@ -112,7 +112,6 @@ public class SettingsScreen
         private Button white;
         private Button black;
         private Button grey;
-        private Button grey;
 
         private boolean alive;
 

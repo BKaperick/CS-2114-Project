@@ -16,6 +16,7 @@ public class CellLocation
     private int xCoord;
     private int yCoord;
     private boolean alive;
+
     /**
      * The constructor for the covertile
      *
@@ -31,18 +32,11 @@ public class CellLocation
 
     /**
      * Makes this cell alive
+     * @param isAlive
      */
-    public void setAlive()
+    public void setAlive(boolean isAlive)
     {
-        this.alive = true;
-    }
-
-    /**
-     * Makes this cell alive
-     */
-    public void setDead()
-    {
-        this.alive = false;
+        this.alive = isAlive;
     }
 
     /**

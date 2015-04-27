@@ -1,7 +1,10 @@
 package com.main.CGOL;
+import android.os.Bundle;
 import sofia.app.ShapeScreen;
 import sofia.graphics.Color;
 import sofia.graphics.RectangleShape;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * // -------------------------------------------------------------------------
@@ -14,26 +17,42 @@ import sofia.graphics.RectangleShape;
 public class PlayScreen
     extends ShapeScreen
 {
+
     private float        gridWidth;
     private float        gridHeight;
     private GridOfCells  theGrid;
     private float        cellSize;
-    private Color        live;
+    private Color        alive;
     private Color        dead;
     private int          width;
     private int          height;
+    private int          speed;
+    private Thread step;
+
+    private boolean playIsClicked;
 
 
-    public void initialize()
+
+    public void beforeInitialize()
     {
-        live = Color.white;
+        super.beforeInitialize();
+        alive = Color.white;
         dead = Color.darkGray;
         width = 20;
         height = 25;
+
+    }
+
+    public void initialize()
+    {
+        step = new Thread(new Act());
+
         gridWidth = this.getWidth();
         gridHeight = this.getHeight();
         theGrid = new GridOfCells(width, height);
-        cellSize = (Math.min(gridWidth, gridHeight) / width);
+        playIsClicked = false;
+
+        cellSize = (Math.min(gridWidth, gridHeight) / Math.min(width, height));
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -49,24 +68,127 @@ public class PlayScreen
                 this.add(cell);
             }
         }
-        Act process = new Act(theGrid, this);
-
     }
 
-    public GridOfCells getGrid()
+    /**
+     * Method should be called when the user enters the playscreen from the
+     * settingsscreen.  It takes in data about color, size and speed of game.
+     */
+    public void updateSettings()
     {
-        return theGrid;
+        HashMap<String, Color> colors = new HashMap();
+        colors.put("red", Color.red);
+        colors.put("blue", Color.blue);
+        colors.put("purple", Color.purple);
+        colors.put("yellow", Color.yellow);
+        colors.put("white", Color.white);
+        colors.put("black", Color.black);
+        colors.put("grey", Color.gray);
+
+        Bundle extras = getIntent().getExtras();
+        ArrayList<String> newSettings;
+        if (extras != null)
+        {
+            String value = extras.getString("settings");
+            newSettings = retrieveSettings(value);
+            for (String key : colors.keySet())
+            {
+                if (newSettings.get(0).contains(key))
+                {
+                    alive = colors.get(key);
+                }
+                if (newSettings.get(1).contains(key))
+                {
+                    dead = colors.get(key);
+                }
+            }
+            width = Integer.parseInt(newSettings.get(2));
+            height = Integer.parseInt(newSettings.get(3));
+            speed = Integer.parseInt(newSettings.get(4));
+            initialize();
+        }
     }
 
-//    /**
-//     * The method that runs when the class is called
-//     *
-//     * @param nothing the necessary param that we will do nothing with
-//     */
-//    public static void main(String[] nothing)
-//    {
-//        Act process = new Act(theGrid, this);
-//    }
+    /**
+     * Method called from updateSettings() which parses the string data and
+     * breaks it down into an arraylist.  The data order is as follows:
+     * (0) alive, (1) dead, (2) width, (3) height, (4) speed
+     * @param unparsed is the string of data from settingsscreen.
+     * @return ArrayList<String> of each individual component of data.
+     */
+    public ArrayList<String> retrieveSettings(String unparsed)
+    {
+        ArrayList<String> settingAttrs = new ArrayList();
+        int lastIndex = 0;
+        int item = 0;
+        for (int i = 0; i < unparsed.length(); i++)
+        {
+            char c = unparsed.charAt(i);
+            if (c == '$')
+            {
+                settingAttrs.add(unparsed.substring(lastIndex, i));
+                item++;
+            }
+        }
+
+
+        return settingAttrs;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     *  Our method to create our thread
+     *
+     *  @author Parisa
+     *  @version Apr 27, 2015
+     */
+    class Act implements Runnable
+    {
+        /**
+         * The function that runs by step
+         */
+        public void run()
+        {
+            while (playIsClicked)
+            {
+                GridOfCells nextGen = new GridOfCells(width, height);
+                for (int i = 0; i < width; i++)
+                {
+                    for (int j = 0; j < height; j++)
+                    {
+                        boolean willLive = theGrid.update(i, j);
+                        nextGen.getCell(i, j).setAlive(willLive);
+                        updateGUI(i, j, willLive);
+                    }
+                }
+                theGrid.setGrid(nextGen.getGrid());
+            }
+        }
+
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Updates the gui depending on the grid object
+     * @param i the x coord
+     * @param j the y coord
+     * @param willLive the status of that cell
+     */
+    public void updateGUI(int i, int j, boolean willLive)
+    {
+        RectangleShape current =
+            getShapes().locatedAt((cellSize * i) + (cellSize / 2),
+                (cellSize * j) + (cellSize / 2)).
+            withClass(RectangleShape.class).front();
+        if (willLive)
+        {
+            current.setFillColor(alive);
+        }
+        else
+        {
+            current.setFillColor(dead);
+        }
+    }
 
     /**
      * Sets the live cell color
@@ -75,7 +197,7 @@ public class PlayScreen
      */
     public void setLiveColor(Color userColor)
     {
-        live = userColor;
+        alive = userColor;
     }
 
     /**
@@ -94,6 +216,45 @@ public class PlayScreen
     public void settingsPlayClicked()
     {
         this.presentScreen(SettingsScreen.class);
+    }
+
+    /**
+     * Plays the simulation
+     */
+    public void playPauseClicked()
+    {
+
+        if (playIsClicked)
+        {
+            playIsClicked = false;
+            step.interrupt();
+
+        }
+        else
+        {
+            playIsClicked = true;
+            step.run();
+        }
+
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Moves the game by one step
+     */
+    public void stepClicked()
+    {
+        GridOfCells nextGen = new GridOfCells(width, height);
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                boolean willLive = theGrid.update(i, j);
+                nextGen.getCell(i, j).setAlive(willLive);
+                updateGUI(i, j, willLive);
+            }
+        }
+        theGrid.setGrid(nextGen.getGrid());
     }
 
     /**
@@ -116,18 +277,6 @@ public class PlayScreen
         height = x;
     }
 
-    /**
-     * Plays the simulation
-     */
-    public void playPauseClicked()
-    {
-
-    }
-
-    /**
-     * Time step method to run simulation
-     */
-
 
     /**
      * Processes the user's touch
@@ -142,15 +291,15 @@ public class PlayScreen
         RectangleShape tile =
             this.getShapes().locatedAt(x, y).
             withClass(RectangleShape.class).front();
-        if (theGrid.getCell(actualX, actualY).getAlive())
+        if (theGrid.isAlive(actualX, actualY))
         {
             tile.setFillColor(dead);
-            theGrid.getCell(actualX, actualY).setDead();
+            theGrid.getCell(actualX, actualY).setAlive(false);
         }
         else
         {
-            tile.setFillColor(live);
-            theGrid.getCell(actualX, actualY).setAlive();
+            tile.setFillColor(alive);
+            theGrid.getCell(actualX, actualY).setAlive(true);
         }
     }
 
