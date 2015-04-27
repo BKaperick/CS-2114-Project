@@ -189,4 +189,42 @@ public class GridOfCells
 
     }
 
+    public String gridToSaveFormat()
+    {
+        String output = "";
+        for (int i = 0; i < gridWidth; i++)
+        {
+            for (int j = 0; j < gridHeight; j++)
+            {
+                if (isAlive(i, j))
+                {
+                    output += "1";
+                }
+                else
+                {
+                    output += "0";
+                }
+            }
+            output += "n";
+        }
+        return output;
+    }
+
+    /**
+     * Saving and loading features are not finished.  IE, this method is not finished.
+     */
+    public void setGridFromSaveFormat(String save)
+    {
+        int newWidth = save.substring(0, save.indexOf('n')).length();
+        int newHeight = save.length() - save.replace("n", "").length();
+
+        CellLocation[][] newGrid = new CellLocation[newWidth][newHeight];
+        for (int i = 0; i < save.length(); i++)
+        {
+            newGrid[i][j] =
+
+        }
+    }
+
+
 }

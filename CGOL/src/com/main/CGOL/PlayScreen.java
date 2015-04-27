@@ -25,17 +25,24 @@ public class PlayScreen
     private Color       dead;
     private int         width;
     private int         height;
-//    private Thread      step;
+    private int         speed;
 
     private boolean     playIsClicked;
     private Button      play;
     private Button      pause;
-    Timer runner;
+    private Timer       runner;
 
+    public void beforeInitialize()
+    {
+        super.beforeInitialize();
+        alive = Color.white;
+        dead = Color.darkGray;
+        width = 20;
+        height = 25;
+    }
 
     public void initialize()
     {
-//        step = new Thread(new Act());
         alive = Color.white;
         dead = Color.darkGray;
         width = 10;
@@ -60,51 +67,76 @@ public class PlayScreen
         }
     }
 
+    /**
+     * Method should be called when the user enters the playscreen from the
+     * settingsscreen.  It takes in data about color, size and speed of game.
+     */
+    public void updateSettings()
+    {
+        HashMap<String, Color> colors = new HashMap();
+        colors.put("red", Color.red);
+        colors.put("blue", Color.blue);
+        colors.put("purple", Color.purple);
+        colors.put("yellow", Color.yellow);
+        colors.put("white", Color.white);
+        colors.put("black", Color.black);
+        colors.put("grey", Color.gray);
 
-//    // -------------------------------------------------------------------------
-//    /**
-//     * Our method to create our thread
-//     *
-//     * @author Parisa
-//     * @version Apr 27, 2015
-//     */
-//    class Act
-//        implements Runnable
-//    {
-//        /**
-//         * The function that runs by step
-//         */
-//        public void run()
-//        {
-//            while (playIsClicked && !Thread.interrupted())
-//            {
-//                GridOfCells nextGen = new GridOfCells(width, height);
-//                for (int i = 0; i < width; i++)
-//                {
-//                    for (int j = 0; j < height; j++)
-//                    {
-//                        boolean willLive = theGrid.update(i, j);
-//                        nextGen.getCell(i, j).setAlive(willLive);
-//                        updateGUI(i, j, willLive);
-//                    }
-//                }
-//                theGrid.setGrid(nextGen.getGrid());
-//            }
-//        }
-//
-//    }
+        Bundle extras = getIntent().getExtras();
+        ArrayList<String> newSettings;
+        if (extras != null)
+        {
+            String value = extras.getString("settings");
+            newSettings = retrieveSettings(value);
+            for (String key : colors.keySet())
+            {
+                if (newSettings.get(0).contains(key))
+                {
+                    alive = colors.get(key);
+                }
+                if (newSettings.get(1).contains(key))
+                {
+                    dead = colors.get(key);
+                }
+            }
+            width = Integer.parseInt(newSettings.get(2));
+            height = Integer.parseInt(newSettings.get(3));
+            speed = Integer.parseInt(newSettings.get(4));
+            initialize();
+        }
+    }
 
+    /**
+     * Method called from updateSettings() which parses the string data and
+     * breaks it down into an arraylist.  The data order is as follows:
+     * (0) alive, (1) dead, (2) width, (3) height, (4) speed
+     * @param unparsed is the string of data from settingsscreen.
+     * @return ArrayList<String> of each individual component of data.
+     */
+    public ArrayList<String> retrieveSettings(String unparsed)
+    {
+        ArrayList<String> settingAttrs = new ArrayList();
+        int lastIndex = 0;
+        int item = 0;
+        for (int i = 0; i < unparsed.length(); i++)
+        {
+            char c = unparsed.charAt(i);
+            if (c == '$')
+            {
+                settingAttrs.add(unparsed.substring(lastIndex, i));
+                item++;
+            }
+        }
+        return settingAttrs;
+    }
 
     // ----------------------------------------------------------
     /**
      * Updates the gui depending on the grid object
      *
-     * @param i
-     *            the x coord
-     * @param j
-     *            the y coord
-     * @param willLive
-     *            the status of that cell
+     * @param i the x coord
+     * @param j the y coord
+     * @param willLive the status of that cell
      */
     public void updateGUI(int i, int j, boolean willLive)
     {
@@ -236,10 +268,8 @@ public class PlayScreen
     /**
      * Processes the user's touch
      *
-     * @param x
-     *            the x coord
-     * @param y
-     *            the y coord
+     * @param x the x coord
+     * @param y the y coord
      */
     public void processTouch(float x, float y)
     {
