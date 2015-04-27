@@ -20,18 +20,23 @@ public class PlayScreen
     private float        cellSize;
     private Color        live;
     private Color        dead;
+    private int          width;
+    private int          height;
+
 
     public void initialize()
     {
         live = Color.white;
         dead = Color.darkGray;
+        width = 20;
+        height = 25;
         gridWidth = this.getWidth();
         gridHeight = this.getHeight();
-        theGrid = new GridOfCells(20, 25);
-        cellSize = (Math.min(gridWidth, gridHeight) / 20);
-        for (int i = 0; i < 20; i++)
+        theGrid = new GridOfCells(width, height);
+        cellSize = (Math.min(gridWidth, gridHeight) / width);
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < 25; j++)
+            for (int j = 0; j < height; j++)
             {
                 RectangleShape cell =
                     new RectangleShape(
@@ -44,7 +49,24 @@ public class PlayScreen
                 this.add(cell);
             }
         }
+        Act process = new Act(theGrid, this);
+
     }
+
+    public GridOfCells getGrid()
+    {
+        return theGrid;
+    }
+
+//    /**
+//     * The method that runs when the class is called
+//     *
+//     * @param nothing the necessary param that we will do nothing with
+//     */
+//    public static void main(String[] nothing)
+//    {
+//        Act process = new Act(theGrid, this);
+//    }
 
     /**
      * Sets the live cell color
@@ -75,6 +97,26 @@ public class PlayScreen
     }
 
     /**
+     * Sets the width of the grid
+     *
+     * @param x    the desired width of the board
+     */
+    public void setWidth(int x)
+    {
+        width = x;
+    }
+
+    /**
+     * Sets the height of the grid
+     *
+     * @param x      the desired height of the grid
+     */
+    public void setHeight(int x)
+    {
+        height = x;
+    }
+
+    /**
      * Plays the simulation
      */
     public void playPauseClicked()
@@ -98,7 +140,8 @@ public class PlayScreen
         int actualX = (int)(x / cellSize);
         int actualY = (int)(y / cellSize);
         RectangleShape tile =
-            this.getShapes().locatedAt(x, y).withClass(RectangleShape.class).front();
+            this.getShapes().locatedAt(x, y).
+            withClass(RectangleShape.class).front();
         if (theGrid.getCell(actualX, actualY).getAlive())
         {
             tile.setFillColor(dead);

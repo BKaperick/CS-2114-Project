@@ -26,7 +26,7 @@ public class TitleScreen
      */
     public void settingsClicked()
     {
-        this.presentScreen(SettingsScreen.class);
+        this.presentScreen(SettingsScreen.class, (Object) this);
     }
     /**
      * Access to the play screen

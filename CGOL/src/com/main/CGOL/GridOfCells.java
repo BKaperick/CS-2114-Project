@@ -37,8 +37,6 @@ public class GridOfCells
                 grid[i][j] = new CellLocation(i, j);
             }
         }
-
-
     }
 
     /**

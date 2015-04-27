@@ -12,8 +12,6 @@
     <TextView
         android:id="@+id/settingsTitle"
         android:layout_width="match_parent"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -114,12 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/speedLabel"
         android:layout_alignBottom="@+id/speedLabel"
-        android:layout_toLeftOf="@+id/settingsTitle"
-        android:ems="10" />
-=======
-        android:layout_marginTop="14dp"
-        android:text="SETTINGS"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_toStartOf="@+id/settingsTitle" />
 
     <CheckBox
         android:id="@+id/checkBox1"
@@ -130,7 +123,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:text="Hide Buttons" />
->>>>>>> ww/master
 
     <TextView>
     </TextView>
