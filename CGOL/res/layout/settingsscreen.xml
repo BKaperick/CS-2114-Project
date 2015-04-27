@@ -9,15 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.main.CGOL.SettingsScreen" >
 
-    <TextView
-        android:id="@+id/settingsTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Settings"
-        android:textSize="15sp" />
-
     <Button
         android:id="@+id/Dead"
         android:layout_width="wrap_content"
@@ -74,7 +65,8 @@
         android:layout_toLeftOf="@+id/hideButtons"
         android:ems="10" >
 
-        <requestFocus />
+        <requestFocus android:layout_width="wrap_content" />
+
     </EditText>
 
     <TextView
@@ -90,8 +82,7 @@
         android:id="@+id/hideButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/settingsTitle"
-        android:layout_below="@+id/settingsTitle"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp"
         android:text="Hide Buttons" />
 
@@ -112,7 +103,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/speedLabel"
         android:layout_alignBottom="@+id/speedLabel"
-        android:layout_toStartOf="@+id/settingsTitle" />
+        android:layout_marginTop="14dp"
+        android:layout_toLeftOf="@+id/speedLabel"
+        android:ems="10"
+        android:text="SETTINGS"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <CheckBox
         android:id="@+id/checkBox1"
@@ -121,10 +116,12 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView1"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Hide Buttons" />
+        android:layout_marginTop="20dp" />
 
-    <TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
     </TextView>
 
 </RelativeLayout>

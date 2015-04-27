@@ -45,6 +45,14 @@ public class SettingsScreen
     private EditText gridHeight;
     private EditText speed;
 
+    private Color aliveColor;
+    private Color deadColor;
+    private String gridWidthVal;
+    private String gridHeightVal;
+    private String speedVal;
+
+    private boolean callingAlive;
+
     public void initialize()
     {
         setBackgroundColor(Color.getRandomColor());
@@ -53,31 +61,40 @@ public class SettingsScreen
 
     public void DeadClicked(View view)
     {
-
+        callingAlive = false;
+        ShowPopUp showPopUp = new ShowPopUp();
     }
 
     public void liveColorClicked(View view)
     {
+        callingAlive = true;
+        ShowPopUp showPopUp = new ShowPopUp();
     }
 
     public void returnToPreviousClicked(View view)
     {
-        finish();
+        Object obj = new Object();
+        finish(obj);
+        Intent i = new Intent(getApplicationContext(), PlayScreen.class);
+        i.putExtra("settings", aliveColor.toString() + "$" +
+            deadColor.toString() + "$" + gridWidthVal + "$" + gridHeightVal +
+                "$" + speedVal);
+        presentScreen(PlayScreen.class);
     }
 
     public void gridWidthCompleted()
     {
-        String newWidth = gridWidth.getText().toString();
+        gridWidthVal = gridWidth.getText().toString();
     }
 
     public void gridHeightLabelCompleted()
     {
-        String newHeight = gridHeight.getText().toString();
+        gridHeightVal = gridHeight.getText().toString();
     }
 
     public void speedCompleted()
     {
-        String newSpeed = speed.getText().toString();
+        speedVal = speed.getText().toString();
     }
 
     private class ShowPopUp extends Activity
@@ -95,33 +112,119 @@ public class SettingsScreen
         private Button white;
         private Button black;
         private Button grey;
+        private Button grey;
 
-        private boolean click = true;
+        private boolean alive;
+
 
         public void onCreate(Bundle savedInstanceState)
         {
-            /**
-            super.onCreate(savedInstanceState);
-            this.setContentView(activity_popup_screen.xml);
             popup = new PopupWindow(this);
             layout = new LinearLayout(this);
-            mainLayout = new LinearLayout(this);
             chooseColor = new TextView(this);
             red.setBackgroundColor(Color.red);
-            blue.setBackgroundColor(Color.blue);
-            purple.setBackgroundColor(Color.purple);
+            blue.getBackground().setColorFilter(Color.blue);//.setBackgroundColor(Color.blue);
+            purple.setFillColor(Color.purple);
             yellow.setBackgroundColor(Color.yellow);
             white.setBackgroundColor(Color.white);
+            green.setBackgroundColor(Color.green);
             black.setBackgroundColor(Color.black);
-            grey.setBackgroundColor(Color.grey);
-            */
+            grey.setBackgroundColor(Color.gray);
+
+            alive = callingAlive;
+
+        }
+
+        public void redClicked()
+        {
+            if (alive)
+            {
+                aliveColor = Color.red;
+            }
+            else
+            {
+                deadColor = Color.red;
+            }
+            popup.dismiss();
+        }
+
+        public void blueClicked()
+        {
+            if (alive)
+            {
+                aliveColor = Color.blue;
+            }
+            else
+            {
+                deadColor = Color.blue;
+            }
+            popup.dismiss();
+        }
+
+        public void purpleClicked()
+        {
+            if (alive)
+            {
+                aliveColor = Color.purple;
+            }
+            else
+            {
+                deadColor = Color.purple;
+            }
+            popup.dismiss();
+        }
+
+        public void yellowClicked()
+        {
+            if (alive)
+            {
+                aliveColor = Color.yellow;
+            }
+            else
+            {
+                deadColor = Color.yellow;
+            }
+            popup.dismiss();
+        }
+
+        public void whiteClicked()
+        {
+            if (alive)
+            {
+                aliveColor = Color.white;
+            }
+            else
+            {
+                deadColor = Color.white;
+            }
+            popup.dismiss();
+        }
+
+        public void blackClicked()
+        {
+            if (alive)
+            {
+                aliveColor = Color.black;
+            }
+            else
+            {
+                deadColor = Color.black;
+            }
+            popup.dismiss();
         }
 
         public void greyClicked()
         {
-
+            if (alive)
+            {
+                aliveColor = Color.gray;
+            }
+            else
+            {
+                deadColor = Color.gray;
+            }
+            popup.dismiss();
         }
-
 
     }
 
