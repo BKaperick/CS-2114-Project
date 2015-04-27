@@ -39,11 +39,11 @@ public class CellLocationTest extends student.TestCase
         assertFalse(celly.getAlive());
 
         //tests making a cell live
-        celly.setAlive();
+        celly.setAlive(true);
         assertTrue(celly.getAlive());
 
         //tests making the Cell dead again
-        celly.setDead();
+        celly.setAlive(false);
         assertFalse(celly.getAlive());
     }
 

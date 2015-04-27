@@ -18,7 +18,10 @@ public class GridOfCells
     private CellLocation[][] grid;
     private int gridWidth;
     private int gridHeight;
-
+    /**
+     * The grid that holds the information for the next generation
+     */
+    GridOfCells nextGen;
 
     /**
      * The initialize method sets up the grid.
@@ -29,14 +32,35 @@ public class GridOfCells
     {
         gridWidth = x;
         gridHeight = y;
-        grid = new CellLocation[gridWidth][gridWidth];
+        nextGen = null;
+        grid = new CellLocation[gridWidth][gridHeight];
         for (int i = 0; i < gridWidth; i++)
         {
-            for (int j = 0; j < gridWidth; j++)
+            for (int j = 0; j < gridHeight; j++)
             {
                 grid[i][j] = new CellLocation(i, j);
             }
         }
+    }
+
+    /**
+     * Returns this grid
+     *
+     * @return grid
+     */
+    public CellLocation[][] getGrid()
+    {
+        return grid;
+    }
+
+    /**
+     * Defines this grid
+     *
+     * @param newGrid the grid we are equating it to
+     */
+    public void setGrid(CellLocation[][] newGrid)
+    {
+        grid = newGrid;
     }
 
     /**
@@ -72,9 +96,13 @@ public class GridOfCells
         {
             for (int j = y - 1; j < y + 2; j++)
             {
-                if (this.getCell(i, j) != null)
+                int p = i-x;
+                int q = j-y;
+                System.out.println(p + " " + " " + q);
+                if (!(x == i && y == j))
                 {
-                    if (this.getCell(i, j).getAlive())
+                    System.out.println("\tMade it to the other side");
+                    if (this.isAlive(i, j))
                     {
                         neighs++;
                     }
@@ -98,7 +126,7 @@ public class GridOfCells
      */
     public CellLocation getCell(int x, int y)
     {
-        if ((x > -1) && (y > -1) && (x < width()) && (y < height()))
+        if ((x >= 0) && (y >= 0) && (x < width()) && (y < height()))
         {
             return grid[x][y];
         }
@@ -126,37 +154,45 @@ public class GridOfCells
         }
         else
         {
-
             return this.getCell(x, y).getAlive();
         }
     }
 
     /**
      * Updates the grid cells depending on their state of living
+     * @param i the x coord
+     * @param j the y coord
+     * @return the boolean of whether or not the cell is alive
      */
-    public void update()
+    public boolean update(int i, int j)
     {
-        for (int i  = 0 ; i < grid.length; i++)
+        if (this.getCell(i, j).getAlive())
         {
-            for (int j = 0; j < grid[0].length; j++)
+            if(this.getNeighbors(i, j) < 2 || this.getNeighbors(i, j) > 3)
             {
-                if (this.getCell(i, j).getAlive())
-                {
-                    if(this.getNeighbors(i, j) < 2 || this.getNeighbors(i, j) > 3)
-                    {
-                        this.getCell(i, j).setDead();
-                    }
-                }
-                else
-                {
-                    if(this.getNeighbors(i, j) == 3)
-                    {
-                        this.getCell(i, j).setAlive();
-                    }
-                }
+                System.out.println("coords: "+i+" "+j+" alive 2-3 neighbors "+getNeighbors(i, j));
+                return false;
+            }
+            else
+            {
+                System.out.println("coords: "+i+" "+j+" alive 0-1or4- neighbors "+getNeighbors(i, j));
+                return true;
             }
         }
-    }
+        else
+        {
+            if(this.getNeighbors(i, j) == 3)
+            {
+                System.out.println("coords: "+i+" "+j+" dead 3 neighbors "+getNeighbors(i, j));
+                return true;
+            }
+            else
+            {
+                System.out.println("coords: "+i+" "+j+" dead not 3 neighbors "+getNeighbors(i, j));
+                return false;
+            }
+        }
 
+    }
 
 }

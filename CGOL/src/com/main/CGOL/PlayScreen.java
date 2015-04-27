@@ -14,26 +14,33 @@ import sofia.graphics.RectangleShape;
 public class PlayScreen
     extends ShapeScreen
 {
+
     private float        gridWidth;
     private float        gridHeight;
     private GridOfCells  theGrid;
     private float        cellSize;
-    private Color        live;
+    private Color        alive;
     private Color        dead;
     private int          width;
     private int          height;
+    private Thread step;
+
+    private boolean playIsClicked;
 
 
     public void initialize()
     {
-        live = Color.white;
+        step = new Thread(new Act());
+        alive = Color.white;
         dead = Color.darkGray;
         width = 20;
         height = 25;
         gridWidth = this.getWidth();
         gridHeight = this.getHeight();
         theGrid = new GridOfCells(width, height);
-        cellSize = (Math.min(gridWidth, gridHeight) / width);
+        playIsClicked = false;
+
+        cellSize = (Math.min(gridWidth, gridHeight) / Math.min(width, height));
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -49,24 +56,62 @@ public class PlayScreen
                 this.add(cell);
             }
         }
-        Act process = new Act(theGrid, this);
-
     }
 
-    public GridOfCells getGrid()
+    // -------------------------------------------------------------------------
+    /**
+     *  Our method to create our thread
+     *
+     *  @author Parisa
+     *  @version Apr 27, 2015
+     */
+    class Act implements Runnable
     {
-        return theGrid;
+        /**
+         * The function that runs by step
+         */
+        public void run()
+        {
+            while (playIsClicked)
+            {
+                GridOfCells nextGen = new GridOfCells(width, height);
+                for (int i = 0; i < width; i++)
+                {
+                    for (int j = 0; j < height; j++)
+                    {
+                        boolean willLive = theGrid.update(i, j);
+                        nextGen.getCell(i, j).setAlive(willLive);
+                        updateGUI(i, j, willLive);
+                    }
+                }
+                theGrid.setGrid(nextGen.getGrid());
+            }
+        }
+
     }
 
-//    /**
-//     * The method that runs when the class is called
-//     *
-//     * @param nothing the necessary param that we will do nothing with
-//     */
-//    public static void main(String[] nothing)
-//    {
-//        Act process = new Act(theGrid, this);
-//    }
+    // ----------------------------------------------------------
+    /**
+     * Updates the gui depending on the grid object
+     * @param i the x coord
+     * @param j the y coord
+     * @param willLive the status of that cell
+     */
+    public void updateGUI(int i, int j, boolean willLive)
+    {
+        RectangleShape current =
+            getShapes().locatedAt((cellSize * i) + (cellSize / 2),
+                (cellSize * j) + (cellSize / 2)).
+            withClass(RectangleShape.class).front();
+        if (willLive)
+        {
+            current.setFillColor(alive);
+        }
+        else
+        {
+            current.setFillColor(dead);
+        }
+    }
 
     /**
      * Sets the live cell color
@@ -75,7 +120,7 @@ public class PlayScreen
      */
     public void setLiveColor(Color userColor)
     {
-        live = userColor;
+        alive = userColor;
     }
 
     /**
@@ -94,6 +139,45 @@ public class PlayScreen
     public void settingsPlayClicked()
     {
         this.presentScreen(SettingsScreen.class);
+    }
+
+    /**
+     * Plays the simulation
+     */
+    public void playPauseClicked()
+    {
+
+        if (playIsClicked)
+        {
+            playIsClicked = false;
+            step.interrupt();
+
+        }
+        else
+        {
+            playIsClicked = true;
+            step.run();
+        }
+
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Moves the game by one step
+     */
+    public void stepClicked()
+    {
+        GridOfCells nextGen = new GridOfCells(width, height);
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                boolean willLive = theGrid.update(i, j);
+                nextGen.getCell(i, j).setAlive(willLive);
+                updateGUI(i, j, willLive);
+            }
+        }
+        theGrid.setGrid(nextGen.getGrid());
     }
 
     /**
@@ -116,18 +200,6 @@ public class PlayScreen
         height = x;
     }
 
-    /**
-     * Plays the simulation
-     */
-    public void playPauseClicked()
-    {
-
-    }
-
-    /**
-     * Time step method to run simulation
-     */
-
 
     /**
      * Processes the user's touch
@@ -142,15 +214,15 @@ public class PlayScreen
         RectangleShape tile =
             this.getShapes().locatedAt(x, y).
             withClass(RectangleShape.class).front();
-        if (theGrid.getCell(actualX, actualY).getAlive())
+        if (theGrid.isAlive(actualX, actualY))
         {
             tile.setFillColor(dead);
-            theGrid.getCell(actualX, actualY).setDead();
+            theGrid.getCell(actualX, actualY).setAlive(false);
         }
         else
         {
-            tile.setFillColor(live);
-            theGrid.getCell(actualX, actualY).setAlive();
+            tile.setFillColor(alive);
+            theGrid.getCell(actualX, actualY).setAlive(true);
         }
     }
 

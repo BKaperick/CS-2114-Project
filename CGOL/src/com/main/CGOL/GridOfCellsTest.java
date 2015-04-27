@@ -47,8 +47,8 @@ public class GridOfCellsTest extends student.TestCase
      */
     public void  testGetNeighbors()
     {
-        grid.getCell(1, 1).setAlive();
-        grid.getCell(0, 1).setAlive();
+        grid.getCell(1, 1).setAlive(true);
+        grid.getCell(0, 1).setAlive(true);
         assertEquals(2, grid.getNeighbors(0, 0));
     }
 
@@ -69,7 +69,7 @@ public class GridOfCellsTest extends student.TestCase
     public void testIsAlive()
     {
         assertFalse(grid.isAlive(-1, -1));
-        grid.getCell(0, 0).setAlive();
+        grid.getCell(0, 0).setAlive(true);
         assertTrue(grid.isAlive(0, 0));
     }
 
