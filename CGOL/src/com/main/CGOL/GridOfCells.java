@@ -98,10 +98,8 @@ public class GridOfCells
             {
                 int p = i-x;
                 int q = j-y;
-                System.out.println(p + " " + " " + q);
                 if (!(x == i && y == j))
                 {
-                    System.out.println("\tMade it to the other side");
                     if (this.isAlive(i, j))
                     {
                         neighs++;

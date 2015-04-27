@@ -83,15 +83,29 @@ public class GridOfCellsTest extends student.TestCase
     }
 
 
-    public void testUpdate()
+    public void testUpdateAlive()
     {
         grid.getCell(0,  0).setAlive(true);
         grid.getCell(1,  0).setAlive(true);
         grid.getCell(0,  1).setAlive(true);
+        assertTrue(grid.update(0, 0));
         assertTrue(grid.update(1, 1));
         grid.getCell(1, 1).setAlive(true);
         assertTrue(grid.update(1, 1));
+    }
 
+    public void testUpdateDead()
+    {
+        grid.getCell(1,  1).setAlive(true);
+        grid.getCell(1,  2).setAlive(true);
+        grid.getCell(2,  2).setAlive(true);
+        grid.getCell(2,  1).setAlive(true);
+        grid.getCell(3,  1).setAlive(true);
+
+        assertFalse(grid.update(2,  1));
+
+        grid.getCell(7, 7).setAlive(true);
+        assertFalse(grid.update(7,  7));
     }
 
 
