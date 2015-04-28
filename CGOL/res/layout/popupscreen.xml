@@ -23,7 +23,6 @@
     android:id="@+id/blue"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/blue"
     android:text="blue" />
 
 <Button
@@ -48,14 +47,12 @@
     android:id="@+id/black"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/black"
     android:text="black" />
 
 <Button
     android:id="@+id/grey"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/grey"
     android:text="gray" />
 
 </LinearLayout>
