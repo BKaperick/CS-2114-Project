@@ -24,11 +24,6 @@ public class PlayScreen
     private float       gridHeight;
     private GridOfCells theGrid;
     private float       cellSize;
-    private Color       alive;
-    private Color       dead;
-    private int         width;
-    private int         height;
-    private int         speed;
 
     private boolean     playIsClicked;
     private Button      play;
@@ -46,12 +41,6 @@ public class PlayScreen
 
     public void initialize()
     {
-        alive = super.getAlive();
-        dead = super.getDead();
-        width = super.getGridWidth();
-        height = super.getGridHeight();
-        gridWidth = this.getWidth();
-        gridHeight = this.getHeight();
         theGrid = new GridOfCells(width, height);
         playIsClicked = false;
 
@@ -70,44 +59,7 @@ public class PlayScreen
         }
     }
 
-    /**
-     * Method should be called when the user enters the playscreen from the
-     * settingsscreen.  It takes in data about color, size and speed of game.
-     */
-    public void updateSettings()
-    {
-        HashMap<String, Color> colors = new HashMap();
-        colors.put("red", Color.red);
-        colors.put("blue", Color.blue);
-        colors.put("purple", Color.purple);
-        colors.put("yellow", Color.yellow);
-        colors.put("white", Color.white);
-        colors.put("black", Color.black);
-        colors.put("grey", Color.gray);
 
-        Bundle extras = getIntent().getExtras();
-        ArrayList<String> newSettings;
-        if (extras != null)
-        {
-            String value = extras.getString("settings");
-            newSettings = retrieveSettings(value);
-            for (String key : colors.keySet())
-            {
-                if (newSettings.get(0).contains(key))
-                {
-                    alive = colors.get(key);
-                }
-                if (newSettings.get(1).contains(key))
-                {
-                    dead = colors.get(key);
-                }
-            }
-            width = Integer.parseInt(newSettings.get(2));
-            height = Integer.parseInt(newSettings.get(3));
-            speed = Integer.parseInt(newSettings.get(4));
-            initialize();
-        }
-    }
 
     /**
      * Method called from updateSettings() which parses the string data and
