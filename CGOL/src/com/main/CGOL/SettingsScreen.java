@@ -1,6 +1,7 @@
 package com.main.CGOL;
 
 //import android.appwidget.AppWidgetManager;
+import sofia.app.Screen;
 import android.content.Context;
 import java.io.FileOutputStream;
 import sofia.graphics.Color;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+
 /**
  * Extra imports for popup window
  */
@@ -29,7 +31,7 @@ import android.view.ViewGroup.LayoutParams;
  *  @version Apr 25, 2015
  */
 public class SettingsScreen
-    extends ShapeScreen
+    extends ParentView
 {
 
     private Button Dead;
@@ -45,11 +47,6 @@ public class SettingsScreen
     private EditText gridHeight;
     private EditText speed;
 
-    private Color aliveColor;
-    private Color deadColor;
-    private String gridWidthVal;
-    private String gridHeightVal;
-    private String speedVal;
 
     private boolean callingAlive;
 
@@ -61,172 +58,159 @@ public class SettingsScreen
 
     public void DeadClicked(View view)
     {
-        callingAlive = false;
-        ShowPopUp showPopUp = new ShowPopUp();
+        super.setCallingAlive(true);
+        presentScreen(PopupScreen.class);
     }
 
     public void liveColorClicked(View view)
     {
-        callingAlive = true;
-        ShowPopUp showPopUp = new ShowPopUp();
+        super.setCallingAlive(true);
+        presentScreen(PopupScreen.class);
     }
 
     public void returnToPreviousClicked(View view)
     {
-        Object obj = new Object();
-        finish(obj);
-        Intent i = new Intent(getApplicationContext(), PlayScreen.class);
-        i.putExtra("settings", aliveColor.toString() + "$" +
-            deadColor.toString() + "$" + gridWidthVal + "$" + gridHeightVal +
-                "$" + speedVal);
         presentScreen(PlayScreen.class);
     }
 
     public void gridWidthCompleted()
     {
-        gridWidthVal = gridWidth.getText().toString();
+        super.setGridWidth(Integer.parseInt(gridWidth.getText().toString()));
     }
 
     public void gridHeightLabelCompleted()
     {
-        gridHeightVal = gridHeight.getText().toString();
+        super.setGridHeight(Integer.parseInt(gridHeight.getText().toString()));
     }
 
     public void speedCompleted()
     {
-        speedVal = speed.getText().toString();
+        super.setSpeed(Integer.parseInt(speed.getText().toString()));
     }
 
-    private class ShowPopUp extends Activity
+
+    private TextView chooseColor;
+    private Button red;
+    private Button blue;
+    private Button purple;
+    private Button yellow;
+    private Button white;
+    private Button black;
+    private Button grey;
+
+    private boolean alive;
+
+
+    public void onCreate(Bundle savedInstanceState)
     {
-        private PopupWindow popup;
-        private LinearLayout layout;
-        private LinearLayout mainLayout;
-        private LayoutParams params;
+        popup = new PopupWindow(this);
+        layout = new LinearLayout(this);
+        chooseColor = new TextView(this);
+        /**
+        red.setBackgroundColor(Color.red);
+        blue.getBackground().setColorFilter(Color.blue);//.setBackgroundColor(Color.blue);
+        purple.setFillColor(Color.purple);
+        yellow.setBackgroundColor(Color.yellow);
+        white.setBackgroundColor(Color.white);
+        green.setBackgroundColor(Color.green);
+        black.setBackgroundColor(Color.black);
+        grey.setBackgroundColor(Color.gray);
+        */
 
-        private TextView chooseColor;
-        private Button red;
-        private Button blue;
-        private Button purple;
-        private Button yellow;
-        private Button white;
-        private Button black;
-        private Button grey;
-
-        private boolean alive;
-
-
-        public void onCreate(Bundle savedInstanceState)
-        {
-            popup = new PopupWindow(this);
-            layout = new LinearLayout(this);
-            chooseColor = new TextView(this);
-            red.setBackgroundColor(Color.red);
-            blue.getBackground().setColorFilter(Color.blue);//.setBackgroundColor(Color.blue);
-            purple.setFillColor(Color.purple);
-            yellow.setBackgroundColor(Color.yellow);
-            white.setBackgroundColor(Color.white);
-            green.setBackgroundColor(Color.green);
-            black.setBackgroundColor(Color.black);
-            grey.setBackgroundColor(Color.gray);
-
-            alive = callingAlive;
-
-        }
-
-        public void redClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.red;
-            }
-            else
-            {
-                deadColor = Color.red;
-            }
-            popup.dismiss();
-        }
-
-        public void blueClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.blue;
-            }
-            else
-            {
-                deadColor = Color.blue;
-            }
-            popup.dismiss();
-        }
-
-        public void purpleClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.purple;
-            }
-            else
-            {
-                deadColor = Color.purple;
-            }
-            popup.dismiss();
-        }
-
-        public void yellowClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.yellow;
-            }
-            else
-            {
-                deadColor = Color.yellow;
-            }
-            popup.dismiss();
-        }
-
-        public void whiteClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.white;
-            }
-            else
-            {
-                deadColor = Color.white;
-            }
-            popup.dismiss();
-        }
-
-        public void blackClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.black;
-            }
-            else
-            {
-                deadColor = Color.black;
-            }
-            popup.dismiss();
-        }
-
-        public void greyClicked()
-        {
-            if (alive)
-            {
-                aliveColor = Color.gray;
-            }
-            else
-            {
-                deadColor = Color.gray;
-            }
-            popup.dismiss();
-        }
+        alive = callingAlive;
 
     }
 
+    public void redClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.red);
+        }
+        else
+        {
+            super.setDead(Color.red);
+        }
+        popup.dismiss();
+    }
+
+    public void blueClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.blue);
+        }
+        else
+        {
+            super.setDead(Color.blue);
+        }
+        popup.dismiss();
+    }
+
+    public void purpleClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.purple);
+        }
+        else
+        {
+            super.setDead(Color.purple);
+        }
+        popup.dismiss();
+    }
+
+    public void yellowClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.yellow);
+        }
+        else
+        {
+            super.setDead(Color.yellow);
+        }
+        popup.dismiss();
+    }
+
+    public void whiteClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.white);
+        }
+        else
+        {
+            super.setDead(Color.white);
+        }
+        popup.dismiss();
+    }
+
+    public void blackClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.black);
+        }
+        else
+        {
+            super.setDead(Color.black);
+        }
+        popup.dismiss();
+    }
+
+    public void greyClicked()
+    {
+        if (alive)
+        {
+            super.setAlive(Color.gray);
+        }
+        else
+        {
+            super.setDead(Color.gray);
+        }
+        popup.dismiss();
+    }
 
     public void Save(String filename, String data)
     {

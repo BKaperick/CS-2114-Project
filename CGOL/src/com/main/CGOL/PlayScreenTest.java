@@ -1,29 +1,34 @@
 package com.main.CGOL;
 
+import sofia.graphics.Color;
+import sofia.graphics.RectangleShape;
 import android.widget.Button;
 import sofia.graphics.ShapeView;
 
+/**
+ * // -------------------------------------------------------------------------
+ * /** Tests the pplay screen class
+ *
+ * @author Parisa
+ * @version Apr 27, 2015
+ */
 public class PlayScreenTest
     extends student.AndroidTestCase<PlayScreen>
 {
     private ShapeView shapeView;
     private int       cellSize;
-    private Button step;
-    private Button play;
-    private Button pause;
+    private Button    step;
+    private Button    play;
+    private Button    pause;
 
 
+    /**
+     * Constructor for PlayScreenTest
+     */
     public PlayScreenTest()
     {
         super(PlayScreen.class);
     }
-
-
-    public void testSomething()
-    {
-        assertEquals(1, 1 + 3 - 3);
-    }
-
 
 
     /**
@@ -36,16 +41,30 @@ public class PlayScreenTest
     }
 
 
+    /**
+     *
+     */
     public void testCellAlive()
     {
+        Color tile =
+            shapeView.getShapes().locatedAt(0, 0)
+                .withClass(RectangleShape.class).front().getFillColor();
+        Color tile2 =
+            shapeView.getShapes().locatedAt(1, 0)
+                .withClass(RectangleShape.class).front().getFillColor();
         touchDownCell(0, 0);
         touchMoveCell(1, 0);
         GridOfCells grid = getScreen().getGrid();
         assertTrue(grid.getCell(0, 0).getAlive());
+        assertEquals(Color.white, tile2);
         assertTrue(grid.getCell(1, 0).getAlive());
+        assertEquals(Color.white, tile);
 
     }
 
+    /**
+     *
+     */
     public void testGridSize()
     {
         GridOfCells grid = getScreen().getGrid();

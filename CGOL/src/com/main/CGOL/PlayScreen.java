@@ -1,5 +1,8 @@
 package com.main.CGOL;
 
+import java.util.ArrayList;
+import android.os.Bundle;
+import java.util.HashMap;
 import android.widget.Button;
 import sofia.app.ShapeScreen;
 import sofia.graphics.Color;
@@ -14,7 +17,7 @@ import sofia.util.Timer;
  * @version Apr 18, 2015
  */
 public class PlayScreen
-    extends ShapeScreen
+    extends ParentView
 {
 
     private float       gridWidth;
@@ -43,10 +46,10 @@ public class PlayScreen
 
     public void initialize()
     {
-        alive = Color.white;
-        dead = Color.darkGray;
-        width = 10;
-        height = 10;
+        alive = super.getAlive();
+        dead = super.getDead();
+        width = super.getGridWidth();
+        height = super.getGridHeight();
         gridWidth = this.getWidth();
         gridHeight = this.getHeight();
         theGrid = new GridOfCells(width, height);

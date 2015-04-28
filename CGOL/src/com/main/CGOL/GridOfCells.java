@@ -221,7 +221,7 @@ public class GridOfCells
         CellLocation[][] newGrid = new CellLocation[newWidth][newHeight];
         for (int i = 0; i < save.length(); i++)
         {
-            newGrid[i][j] =
+//            newGrid[i][j] =
 
         }
     }

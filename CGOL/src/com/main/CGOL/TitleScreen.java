@@ -1,5 +1,6 @@
 package com.main.CGOL;
 
+import sofia.graphics.Color;
 import sofia.app.Screen;
 import android.os.Bundle;
 
@@ -12,12 +13,16 @@ import android.os.Bundle;
  *  @version Apr 23, 2015
  */
 public class TitleScreen
-    extends Screen
+    extends ParentView
 {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.titlescreen);
+        super.setAlive(Color.white);
+        super.setDead(Color.darkGray);
+        super.setGridWidth(20);
+        super.setGridHeight(25);
     }
 
 
