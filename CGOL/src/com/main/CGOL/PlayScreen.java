@@ -1,10 +1,5 @@
 package com.main.CGOL;
 
-import java.util.ArrayList;
-import android.os.Bundle;
-import java.util.HashMap;
-import android.widget.Button;
-import sofia.app.ShapeScreen;
 import sofia.graphics.Color;
 import sofia.graphics.RectangleShape;
 import sofia.util.Timer;
@@ -20,70 +15,33 @@ public class PlayScreen
     extends ParentView
 {
 
-    private float       gridWidth;
-    private float       gridHeight;
+
     private GridOfCells theGrid;
     private float       cellSize;
-
     private boolean     playIsClicked;
-    private Button      play;
-    private Button      pause;
     private Timer       runner;
-
-    public void beforeInitialize()
-    {
-        super.beforeInitialize();
-        alive = Color.white;
-        dead = Color.darkGray;
-        width = 20;
-        height = 25;
-    }
 
     public void initialize()
     {
         theGrid = new GridOfCells(width, height);
+        theGrid = new GridOfCells(super.getGridWidth(), super.getGridHeight());
         playIsClicked = false;
-
-        cellSize = (Math.min(gridWidth, gridHeight) / Math.min(width, height));
-        for (int i = 0; i < width; i++)
+        cellSize = (Math.min(this.getWidth(), this.getHeight()) / Math.min(super.getGridWidth(), super.getGridHeight()));
+        for (int i = 0; i < super.getGridWidth(); i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < super.getGridHeight(); j++)
             {
                 RectangleShape cell =
                     new RectangleShape(i * cellSize, j * cellSize, (i + 1)
                         * cellSize, (j + 1) * cellSize);
                 cell.setColor(Color.black);
-                cell.setFillColor(dead);
+                cell.setFillColor(super.getDeadColor());
                 this.add(cell);
             }
         }
     }
 
 
-
-    /**
-     * Method called from updateSettings() which parses the string data and
-     * breaks it down into an arraylist.  The data order is as follows:
-     * (0) alive, (1) dead, (2) width, (3) height, (4) speed
-     * @param unparsed is the string of data from settingsscreen.
-     * @return ArrayList<String> of each individual component of data.
-     */
-    public ArrayList<String> retrieveSettings(String unparsed)
-    {
-        ArrayList<String> settingAttrs = new ArrayList();
-        int lastIndex = 0;
-        int item = 0;
-        for (int i = 0; i < unparsed.length(); i++)
-        {
-            char c = unparsed.charAt(i);
-            if (c == '$')
-            {
-                settingAttrs.add(unparsed.substring(lastIndex, i));
-                item++;
-            }
-        }
-        return settingAttrs;
-    }
 
     // ----------------------------------------------------------
     /**
@@ -103,36 +61,12 @@ public class PlayScreen
                 .withClass(RectangleShape.class).front();
         if (willLive)
         {
-            current.setFillColor(alive);
+            current.setFillColor(super.getAliveColor());
         }
         else
         {
-            current.setFillColor(dead);
+            current.setFillColor(super.getDeadColor());
         }
-    }
-
-
-    /**
-     * Sets the live cell color
-     *
-     * @param userColor
-     *            The color the user wants the live cells to be
-     */
-    public void setLiveColor(Color userColor)
-    {
-        alive = userColor;
-    }
-
-
-    /**
-     * Sets the dead cell color
-     *
-     * @param userColor
-     *            The color the user wants the dead cells to be
-     */
-    public void setDeadColor(Color userColor)
-    {
-        dead = userColor;
     }
 
 
@@ -142,6 +76,7 @@ public class PlayScreen
     public void settingsPlayClicked()
     {
         this.presentScreen(SettingsScreen.class);
+        this.finish();
     }
 
 
@@ -175,10 +110,10 @@ public class PlayScreen
      */
     public void step()
     {
-        GridOfCells nextGen = new GridOfCells(width, height);
-        for (int i = 0; i < width; i++)
+        GridOfCells nextGen = new GridOfCells(super.getGridWidth(), super.getGridHeight());
+        for (int i = 0; i < super.getGridWidth(); i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < super.getGridHeight(); j++)
             {
                 boolean willLive = theGrid.update(i, j);
                 nextGen.getCell(i, j).setAlive(willLive);
@@ -197,30 +132,6 @@ public class PlayScreen
 
 
     /**
-     * Sets the width of the grid
-     *
-     * @param x
-     *            the desired width of the board
-     */
-    public void setWidth(int x)
-    {
-        width = x;
-    }
-
-
-    /**
-     * Sets the height of the grid
-     *
-     * @param x
-     *            the desired height of the grid
-     */
-    public void setHeight(int x)
-    {
-        height = x;
-    }
-
-
-    /**
      * Processes the user's touch
      *
      * @param x the x coord
@@ -235,12 +146,12 @@ public class PlayScreen
                 .front();
         if (theGrid.isAlive(actualX, actualY))
         {
-            tile.setFillColor(dead);
+            tile.setFillColor(super.getDeadColor());
             theGrid.getCell(actualX, actualY).setAlive(false);
         }
         else
         {
-            tile.setFillColor(alive);
+            tile.setFillColor(super.getAliveColor());
             theGrid.getCell(actualX, actualY).setAlive(true);
         }
     }

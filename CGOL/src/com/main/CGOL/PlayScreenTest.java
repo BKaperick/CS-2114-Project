@@ -36,10 +36,13 @@ public class PlayScreenTest
      */
     public void setUp()
     {
+        getScreen().setAliveColor(Color.white);
+        getScreen().setDeadColor(Color.darkGray);
+        getScreen().setGridWidth(10);
+        getScreen().setGridHeight(10);
         float viewSize = Math.min(shapeView.getWidth(), shapeView.getHeight());
         cellSize = (int)(viewSize / 10);
     }
-
 
     /**
      *
@@ -63,7 +66,7 @@ public class PlayScreenTest
     }
 
     /**
-     *
+     * Tests the grid size
      */
     public void testGridSize()
     {
@@ -72,6 +75,9 @@ public class PlayScreenTest
     }
 
 
+    /**
+     * Tests the cell dead method
+     */
     public void testCellDead()
     {
         clickCell(1, 1);
@@ -82,6 +88,9 @@ public class PlayScreenTest
     }
 
 
+    /**
+     * Tests how the cell becomes alive after it steps
+     */
     public void testBecomesAliveAfterStep()
     {
         clickCell(2, 3);
@@ -93,6 +102,9 @@ public class PlayScreenTest
     }
 
 
+    /**
+     * Tests how the cell dies after we step
+     */
     public void testDeadAfterStepNoAdj()
     {
         clickCell(0, 0);
@@ -103,6 +115,9 @@ public class PlayScreenTest
     }
 
 
+    /**
+     * Tests how the cell stays alive
+     */
     public void testStayAlive()
     {
         clickCell(0, 0);
@@ -118,6 +133,9 @@ public class PlayScreenTest
     }
 
 
+    /**
+     * Tests how the cell stays alive
+     */
     public void testStayAlive2()
     {
         clickCell(0, 0);
@@ -131,6 +149,9 @@ public class PlayScreenTest
     }
 
 
+    /**
+     * Tests how the cell stays alive
+     */
     public void testBecomesDeadAfterStep()
     {
         clickCell(0, 0);

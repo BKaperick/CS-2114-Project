@@ -53,7 +53,6 @@ public class SettingsScreen
     public void initialize()
     {
         setBackgroundColor(Color.getRandomColor());
-        //int widgetIDs[] = AppWidgetManager.getInstance(getApplication());
     }
 
     public void DeadClicked(View view)
@@ -87,25 +86,4 @@ public class SettingsScreen
     {
         super.setSpeed(Integer.parseInt(speed.getText().toString()));
     }
-
-
-    private TextView chooseColor;
-
-
-    public void Save(String filename, String data)
-    {
-        FileOutputStream outputStream;
-
-        try
-        {
-            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(data.getBytes());
-            outputStream.close();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
 }

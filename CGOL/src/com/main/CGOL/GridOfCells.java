@@ -1,5 +1,7 @@
 package com.main.CGOL;
 
+import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * // -------------------------------------------------------------------------
@@ -18,6 +20,9 @@ public class GridOfCells
     private CellLocation[][] grid;
     private int gridWidth;
     private int gridHeight;
+
+    private Stack<ArrayList<String>> memoryStack;
+
     /**
      * The grid that holds the information for the next generation
      */
@@ -189,11 +194,13 @@ public class GridOfCells
 
     }
 
-    public String gridToSaveFormat()
+    public void addCurrentToStack()
     {
-        String output = "";
+        ArrayList<String> memory = new ArrayList();
+        String output;
         for (int i = 0; i < gridWidth; i++)
         {
+            output  = "";
             for (int j = 0; j < gridHeight; j++)
             {
                 if (isAlive(i, j))
@@ -205,25 +212,28 @@ public class GridOfCells
                     output += "0";
                 }
             }
-            output += "n";
+            memory.add(output);
         }
-        return output;
+        memoryStack.add(memory);
     }
 
     /**
      * Saving and loading features are not finished.  IE, this method is not finished.
      */
-    public void setGridFromSaveFormat(String save)
+    public void setGridFromSaveFormat(ArrayList<String> save)
     {
-        int newWidth = save.substring(0, save.indexOf('n')).length();
-        int newHeight = save.length() - save.replace("n", "").length();
+        int newWidth = save.get(0).length();
+        int newHeight = save.size();
 
         CellLocation[][] newGrid = new CellLocation[newWidth][newHeight];
-        for (int i = 0; i < save.length(); i++)
+        for (int i = 0; i < save.size(); i++)
         {
-//            newGrid[i][j] =
-
+            for (int j = 0; j < save.get(0).length(); j++)
+            {
+                newGrid[j][i] = new CellLocation(Integer.parseInt(Character.toString(save.get(i).charAt(j))), i);
+            }
         }
+        setGrid(newGrid);
     }
 
 
