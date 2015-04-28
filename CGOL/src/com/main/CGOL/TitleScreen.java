@@ -19,10 +19,10 @@ public class TitleScreen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.titlescreen);
-        super.setAlive(Color.white);
-        super.setDead(Color.darkGray);
-        super.setGridWidth(20);
-        super.setGridHeight(25);
+        super.setAliveColor(Color.white);
+        super.setDeadColor(Color.darkGray);
+        super.setGridWidth(10);
+        super.setGridHeight(10);
     }
 
 
