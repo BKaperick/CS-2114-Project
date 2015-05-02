@@ -14,18 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:text="Settings"
-        android:textSize="15sp" />
+        android:textSize="50sp" />
 
     <Button
-        android:id="@+id/Dead"
+        android:id="@+id/deadColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/liveColor"
         android:layout_alignBottom="@+id/liveColor"
         android:layout_alignParentRight="true"
-        android:onClick="DeadClicked"
+        android:onClick="deadColorClicked"
         android:text="Dead Cell Color" />
 
     <Button
@@ -34,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/hideButtons"
         android:layout_marginTop="16dp"
-        android:layout_toLeftOf="@+id/Dead"
+        android:layout_toLeftOf="@+id/deadColor"
         android:onClick="liveColorClicked"
         android:text="Live Cell Color" />
 
@@ -44,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/gridWidth"
         android:layout_alignBottom="@+id/gridWidth"
-        android:layout_alignLeft="@+id/Dead"
+        android:layout_alignLeft="@+id/deadColor"
         android:text="Grid Width" />
 
     <TextView
@@ -60,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/liveColor"
-        android:layout_below="@+id/Dead"
+        android:layout_below="@+id/deadColor"
         android:layout_marginTop="22dp"
         android:layout_toLeftOf="@+id/hideButtons"
         android:ems="10" />
@@ -113,16 +112,6 @@
         android:layout_alignBaseline="@+id/speedLabel"
         android:layout_alignBottom="@+id/speedLabel"
         android:layout_toStartOf="@+id/settingsTitle" />
-
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Hide Buttons" />
     
     <ShapeView
         android:id="@+id/shapeView"
@@ -132,5 +121,14 @@
         android:layout_below="@+id/shapeView"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/hideButtons"
+        android:layout_alignBottom="@+id/hideButtons"
+        android:layout_toLeftOf="@+id/deadColor"
+        android:text="Hide Buttons" />
 
 </RelativeLayout>

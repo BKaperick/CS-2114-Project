@@ -23,6 +23,7 @@ public class TitleScreen
         super.setDeadColor(Color.darkGray);
         super.setGridWidth(10);
         super.setGridHeight(10);
+        super.setSpeed(50);
     }
 
 
@@ -31,7 +32,7 @@ public class TitleScreen
      */
     public void settingsClicked()
     {
-        this.presentScreen(SettingsScreen.class, (Object) this);
+        this.presentScreen(SettingsScreen.class);
         this.finish();
     }
     /**

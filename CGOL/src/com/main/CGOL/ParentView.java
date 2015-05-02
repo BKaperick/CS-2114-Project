@@ -128,6 +128,4 @@ public class ParentView
     {
         speed = newSpeed;
     }
-
-
 }

@@ -7,6 +7,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Parisa/workspace/Sofia-Support/libs/student.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Parisa/workspace/Sofia-Support/libs/sofia-with-dependencies.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Bryan/Documents/College/Spring2015/CS 2114/Sofia-Support/libs/sofia-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

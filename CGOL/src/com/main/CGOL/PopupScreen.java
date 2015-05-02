@@ -1,9 +1,17 @@
 package com.main.CGOL;
 
+import sofia.graphics.RectangleShape;
 import android.widget.Button;
 import sofia.graphics.Color;
-import sofia.app.ShapeScreen;
 
+/**
+ * // -------------------------------------------------------------------------
+/**
+ *  The PopupScreen
+ *
+ *  @author Parisa
+ *  @version Apr 30, 2015
+ */
 public class PopupScreen
     extends ParentView
 {
@@ -16,6 +24,11 @@ public class PopupScreen
     private Button grey;
 
     private boolean alive;
+
+    public void initialize()
+    {
+        setBackgroundColor(Color.magenta);
+    }
 
     public void redClicked()
     {

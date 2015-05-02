@@ -23,7 +23,6 @@ public class PlayScreen
 
     public void initialize()
     {
-        theGrid = new GridOfCells(width, height);
         theGrid = new GridOfCells(super.getGridWidth(), super.getGridHeight());
         playIsClicked = false;
         cellSize = (Math.min(this.getWidth(), this.getHeight()) / Math.min(super.getGridWidth(), super.getGridHeight()));
@@ -40,7 +39,6 @@ public class PlayScreen
             }
         }
     }
-
 
 
     // ----------------------------------------------------------
@@ -88,7 +86,7 @@ public class PlayScreen
         if (!playIsClicked)
         {
             playIsClicked = true;
-            runner = sofia.util.Timer.callRepeatedly(this, "step", 50);
+            runner = sofia.util.Timer.callRepeatedly(this, "step", super.getSpeed());
         }
     }
 

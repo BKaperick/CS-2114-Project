@@ -33,55 +33,70 @@ import android.view.ViewGroup.LayoutParams;
 public class SettingsScreen
     extends ParentView
 {
-
-    private Button Dead;
-    private Button liveColor;
-    private Button returnToPrevious;
-
-    private TextView settingsTitle;
-    private TextView gridWidthLabel;
-    private TextView gridHeightLabel;
-    private TextView speedLabel;
-
+    /**
+     * Where the user inserts the grid width
+     */
     private EditText gridWidth;
+    /**
+     * Where the user inserts the gridheight
+     */
     private EditText gridHeight;
+    /**
+     * Where the user inserts the speed
+     */
     private EditText speed;
-
-
-    private boolean callingAlive;
+//
+//    private boolean callingAlive;
 
     public void initialize()
     {
         setBackgroundColor(Color.getRandomColor());
     }
-
-    public void DeadClicked(View view)
+    /**
+     * Method for when the user wants to change the color of dead cells
+     * @param v theview
+     */
+    public void deadColorClicked(View v)
     {
-        super.setCallingAlive(true);
+        super.setCallAlive(false);
         presentScreen(PopupScreen.class);
+        this.finish();
     }
-
-    public void liveColorClicked(View view)
+    /**
+     * Method for when the user wants to change the color of live cells
+     * @param v view
+     */
+    public void liveColorClicked(View v)
     {
-        super.setCallingAlive(true);
+        super.setCallAlive(true);
         presentScreen(PopupScreen.class);
+        this.finish();
     }
-
-    public void returnToPreviousClicked(View view)
+    /**
+     * Returns the user to the play screen
+     */
+    public void returnToPreviousClicked()
     {
         presentScreen(PlayScreen.class);
+        this.finish();
     }
-
+    /**
+     * Sets the desired grid width
+     */
     public void gridWidthCompleted()
     {
         super.setGridWidth(Integer.parseInt(gridWidth.getText().toString()));
     }
-
-    public void gridHeightLabelCompleted()
+    /**
+     * Sets the desired grid height
+     */
+    public void gridHeightCompleted()
     {
         super.setGridHeight(Integer.parseInt(gridHeight.getText().toString()));
     }
-
+    /**
+     * Sets the desired speed
+     */
     public void speedCompleted()
     {
         super.setSpeed(Integer.parseInt(speed.getText().toString()));
