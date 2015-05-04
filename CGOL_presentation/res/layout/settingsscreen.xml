@@ -1,0 +1,134 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_launcher"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.main.CGOL.SettingsScreen" >
+
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="Settings"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/deadColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/liveColor"
+        android:layout_alignBottom="@+id/liveColor"
+        android:layout_alignParentRight="true"
+        android:onClick="deadColorClicked"
+        android:text="Dead Cell Color" />
+
+    <Button
+        android:id="@+id/liveColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hideButtons"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@+id/deadColor"
+        android:onClick="liveColorClicked"
+        android:text="Live Cell Color" />
+
+    <TextView
+        android:id="@+id/gridWidthLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/gridWidth"
+        android:layout_alignBottom="@+id/gridWidth"
+        android:layout_alignLeft="@+id/deadColor"
+        android:text="Grid Width" />
+
+    <TextView
+        android:id="@+id/gridHeightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/gridHeight"
+        android:layout_alignRight="@+id/hideButtons"
+        android:text="Grid Height" />
+
+    <EditText
+        android:id="@+id/gridWidth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/liveColor"
+        android:layout_below="@+id/deadColor"
+        android:layout_marginTop="22dp"
+        android:layout_toLeftOf="@+id/hideButtons"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/gridHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gridWidth"
+        android:layout_below="@+id/gridWidth"
+        android:layout_toLeftOf="@+id/hideButtons"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/speedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridHeightLabel"
+        android:layout_marginTop="24dp"
+        android:layout_toRightOf="@+id/liveColor"
+        android:text="Speed (gen/second)" />
+
+    <CheckBox
+        android:id="@+id/hideButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/settingsTitle"
+        android:layout_below="@+id/settingsTitle"
+        android:layout_marginTop="41dp"
+        android:text="Hide Buttons" />
+
+    <Button
+        android:id="@+id/returnToPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/speedLabel"
+        android:layout_marginBottom="19dp"
+        android:minWidth="256dp"
+        android:onClick="returnToPreviousClicked"
+        android:text="Return to Previous Screen" />
+
+    <EditText
+        android:id="@+id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/speedLabel"
+        android:layout_alignBottom="@+id/speedLabel"
+        android:layout_toStartOf="@+id/settingsTitle" />
+    
+    <ShapeView
+        android:id="@+id/shapeView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/shapeView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/hideButtons"
+        android:layout_alignBottom="@+id/hideButtons"
+        android:layout_toLeftOf="@+id/deadColor"
+        android:text="Hide Buttons" />
+
+</RelativeLayout>

@@ -217,6 +217,12 @@ public class GridOfCells
         memoryStack.add(memory);
     }
 
+    public void revertToPrevious()
+    {
+        ArrayList<String> lastSave = memoryStack.pop();
+        setGridFromSaveFormat(lastSave);
+    }
+
     /**
      * Saving and loading features are not finished.  IE, this method is not finished.
      */
