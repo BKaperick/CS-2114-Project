@@ -1,5 +1,7 @@
 package com.main.CGOL;
 
+import android.content.Context;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -240,6 +242,24 @@ public class GridOfCells
             }
         }
         setGrid(newGrid);
+    }
+
+    public void save()
+    {
+        ArrayList<String> current = memoryStack.peek();
+        String output = "";
+        for (String row : current)
+        {
+            output += "$" + current;
+        }
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Context.openFileOutput("save1.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 
 
